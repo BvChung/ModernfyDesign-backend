@@ -17,6 +17,8 @@ ModernfyDesign backend REST API
 
 - [NodeJs](https://nodejs.dev/en/)
 - [Express](https://expressjs.com/)
+- [Cloudinary](https://cloudinary.com/)
+- [JWT](https://jwt.io/)
 - [Zod](https://zod.dev/)
 
 ## Development
