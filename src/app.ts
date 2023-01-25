@@ -17,7 +17,6 @@ dotenv.config();
 connectDatabase();
 
 const app: Express = express();
-const deployURL = process.env.DEPLOYMENT_URL as string;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -28,7 +27,7 @@ app.use(
 			"http://localhost:3000",
 			"http://127.0.0.1:5500",
 			"http://localhost:3001",
-			deployURL,
+			"https://modernfydesign.onrender.com/",
 		],
 		credentials: true,
 	})
