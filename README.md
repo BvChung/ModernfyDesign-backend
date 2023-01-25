@@ -1,4 +1,4 @@
-# MordernfyDesign-backend
+# ModernfyDesign-backend
 
 ### [ModernfyDesign frontend](https://github.com/BvChung/ModernfyDesign-frontend)
 
