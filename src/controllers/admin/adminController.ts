@@ -29,15 +29,15 @@ export const signInAdmin = async (
 			throw new Error("Email and/or password do not match.");
 		}
 
+		if (!(await bcrypt.compare(password, foundUser.password))) {
+			throw new Error("Email and/or password do not match.");
+		}
+
 		if (
 			foundUser.role !== accessRoles.Admin &&
 			foundUser.role !== accessRoles.Manager
 		) {
 			throw new Error("Unauthorized access.");
-		}
-
-		if (!(await bcrypt.compare(password, foundUser.password))) {
-			throw new Error("Email and/or password do not match.");
 		}
 
 		const refreshToken = generateRefreshToken(foundUser._id);
@@ -55,12 +55,6 @@ export const signInAdmin = async (
 		res
 			.status(200)
 			.cookie("jwt", refreshToken, {
-				sameSite: "strict",
-				httpOnly: true,
-				secure: true,
-				maxAge: 24 * 60 * 60 * 1000,
-			})
-			.cookie("name", `${foundUser.firstName}_${foundUser.lastName}`, {
 				sameSite: "strict",
 				httpOnly: true,
 				secure: true,

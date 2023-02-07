@@ -25,10 +25,7 @@ app.use(
 	cors({
 		origin: [
 			"http://localhost:3000",
-			"http://127.0.0.1:5500",
 			"http://localhost:3001",
-			"https://modernfydesign.onrender.com",
-			"https://modernfydesign.onrender.com/",
 			`${process.env.DEPLOYMENT_URL}`,
 		],
 		credentials: true,

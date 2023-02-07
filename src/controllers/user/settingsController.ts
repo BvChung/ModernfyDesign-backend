@@ -17,6 +17,13 @@ export const updateName = async (
 	next: NextFunction
 ) => {
 	try {
+		if (
+			req.user.id === process.env.GUEST_ADMIN_ACCOUNT_ID ||
+			req.user.id === process.env.GUEST_ACCOUNT_ID
+		) {
+			throw new Error("Guest account info cannot be changed.");
+		}
+
 		const { firstName, lastName } = req.body;
 
 		// Update user information
@@ -50,6 +57,13 @@ export const updateEmail = async (
 	next: NextFunction
 ) => {
 	try {
+		if (
+			req.user.id === process.env.GUEST_ADMIN_ACCOUNT_ID ||
+			req.user.id === process.env.GUEST_ACCOUNT_ID
+		) {
+			throw new Error("Guest account info cannot be changed.");
+		}
+
 		const { email } = req.body;
 
 		if (req.user.email === email) {
@@ -84,15 +98,20 @@ export const updatePassword = async (
 	next: NextFunction
 ) => {
 	try {
+		if (
+			req.user.id === process.env.GUEST_ADMIN_ACCOUNT_ID ||
+			req.user.id === process.env.GUEST_ACCOUNT_ID
+		) {
+			throw new Error("Guest account info cannot be changed.");
+		}
+
 		const { currentPassword, newPassword } = req.body;
 
 		if (!(await bcrypt.compare(currentPassword, req.user.password))) {
-			res.status(400);
-			throw new Error("Current password is incorrect. Try again.");
+			throw new Error("Your current password is incorrect. Try again.");
 		}
 
 		if (currentPassword === newPassword) {
-			res.status(400);
 			throw new Error("Your new password cannot be the same as the original.");
 		}
 

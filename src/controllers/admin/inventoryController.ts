@@ -119,6 +119,7 @@ export const updateProduct = async (
 		const { id: productId } = req.params;
 
 		const verifyProduct = await ProductModel.findById(productId);
+
 		if (
 			req.user.id === process.env.GUEST_ADMIN_ACCOUNT_ID &&
 			verifyProduct?.createdBy !== process.env.GUEST_ADMIN_ACCOUNT_ID
@@ -127,6 +128,7 @@ export const updateProduct = async (
 		}
 
 		const foundProduct = await ProductModel.findById(productId);
+
 		if (!foundProduct) throw new Error("Product not found.");
 
 		let uploadedImage;

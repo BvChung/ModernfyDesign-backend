@@ -54,12 +54,6 @@ export const signInUser = async (
 				secure: true,
 				maxAge: 24 * 60 * 60 * 1000,
 			})
-			.cookie("name", `${foundUser.firstName}_${foundUser.lastName}`, {
-				sameSite: "strict",
-				httpOnly: true,
-				secure: true,
-				maxAge: 24 * 60 * 60 * 1000,
-			})
 			.json({
 				_id: foundUser.id,
 				firstName: foundUser.firstName,
@@ -86,12 +80,13 @@ export const registerUser = async (
 		const { firstName, lastName, email, password, role } = req.body;
 
 		// Check if user exists in the database based on email
-		const dupeEmail = await UserModel.findOne({ email });
+		const duplicateEmail = await UserModel.findOne({ email });
 
-		if (dupeEmail) {
+		if (duplicateEmail) {
 			res.status(409);
 			throw new Error("This email address is already in use.");
 		}
+
 		if (password.slice(0, 1) === " " || password.slice(-1) === " ") {
 			res.status(400);
 			throw new Error("Your password cannot begin or end with a blank space.");
@@ -128,12 +123,6 @@ export const registerUser = async (
 		return res
 			.status(201)
 			.cookie("jwt", refreshToken, {
-				sameSite: "strict",
-				httpOnly: true,
-				secure: true,
-				maxAge: 24 * 60 * 60 * 1000,
-			})
-			.cookie("name", `${user.firstName}_${user.lastName}`, {
 				sameSite: "strict",
 				httpOnly: true,
 				secure: true,
@@ -216,17 +205,11 @@ export const logoutUser = async (
 			}
 		);
 
-		res
-			.clearCookie("jwt", {
-				httpOnly: true,
-				sameSite: "strict",
-				secure: true,
-			})
-			.clearCookie("name", {
-				httpOnly: true,
-				sameSite: "strict",
-				secure: true,
-			});
+		res.clearCookie("jwt", {
+			httpOnly: true,
+			sameSite: "strict",
+			secure: true,
+		});
 
 		return res.sendStatus(204);
 	} catch (error) {
