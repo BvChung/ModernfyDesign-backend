@@ -55,6 +55,7 @@ CLOUDINARY_PRODUCT_UPLOAD =
 
 # MongoDB created guest admin id (_id:)
 GUEST_ADMIN_ACCOUNT_ID =
+ADMIN_ACCOUNT_ID =
 ```
 
 3. Starting backend
